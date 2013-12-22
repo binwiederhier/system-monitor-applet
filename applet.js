@@ -440,8 +440,13 @@ Mem.prototype = {
             this.vals = this.tip_vals = [0,0,0];
         } else {
             for (let i = 0;i < 3;i++) {
-                this.vals[i] = this.mem[i] / this.total;
-                this.tip_vals[i] = Math.round(this.vals[i] * 100);
+                // this.vals[i] = this.mem[i] / this.total;                 
+                // this.tip_vals[i] = Math.round(this.vals[i] * 100);
+                
+                // <philipp-edit>
+                this.vals[i] = this.mem[i]; 
+                this.tip_vals[i] = Math.round(this.vals[i]);
+                // </philipp-edit>                
             }
         }
         this.text_items[0].text = this.tip_vals[0].toString();
@@ -449,8 +454,13 @@ Mem.prototype = {
         this.menu_items[3].text = this.total.toString();
     },
     create_text_items: function() {
+        // return [new St.Label({ style_class: "sma-status-value"}),
+        //         new St.Label({ text: '%', style_class: "sma-perc-label"})];
+
+        // <philipp-edit>
         return [new St.Label({ style_class: "sma-status-value"}),
-                new St.Label({ text: '%', style_class: "sma-perc-label"})];
+                new St.Label({ text: "MiB", style_class: "sma-unit-label"})];
+        // </philipp-edit>
     },
     create_menu_items: function() {
         return [new St.Label({ style_class: "sma-value"}),
@@ -1000,13 +1010,23 @@ MyApplet.prototype = {
             this.menu = new Applet.AppletPopupMenu(this, orientation);
             this.menuManager.addMenu(this.menu);
             let elts = {
+                // cpu: new Cpu(orientation),
+                // freq: new Freq(orientation),
+                // memory: new Mem(orientation),
+                // swap: new Swap(orientation),
+                // net: new Net(orientation),
+                // disk: new Disk(orientation),
+                // thermal: new Thermal(orientation),
+                
+                // <philipp-edit>
                 cpu: new Cpu(orientation),
                 freq: new Freq(orientation),
-                memory: new Mem(orientation),
                 swap: new Swap(orientation),
                 net: new Net(orientation),
                 disk: new Disk(orientation),
+                memory: new Mem(orientation),
                 thermal: new Thermal(orientation),
+                // </philipp-edit>
             }
             let icon = new Icon();
             
